@@ -48,16 +48,14 @@ export default function BalloonSection({ onBalloonPop }) {
   }, []);
 
   const resetBalloons = () => {
-    const list = Array.from({ length: 12 }).map((_, index) => {
+    const list = Array.from({ length: 8 }).map((_, index) => {
       const colorScheme = BALLOON_COLORS[index % BALLOON_COLORS.length];
       
       // Separate balloons by distributing their starting horizontal coordinates
       // and vertical offsets more widely across the panel area.
-      const column = index % 4; // 4 columns
-      const row = Math.floor(index / 4); // 3 rows
-      
-      const xOffset = 15 + (column * 23) + (Math.random() * 8); // 15% to 92%
-      const yOffset = 15 + (row * 25) + (Math.random() * 12); // 15% to 77%
+      // spread balloons more evenly across the panel and keep them below the caption
+      const xOffset = 8 + Math.random() * 84; // 8% - 92%
+      const yOffset = 28 + Math.random() * 46; // 28% - 74%
       
       return {
         id: index,
@@ -66,7 +64,7 @@ export default function BalloonSection({ onBalloonPop }) {
         scale: 0.75 + Math.random() * 0.35,
         color: colorScheme,
         popped: false,
-        floatDelay: Math.random() * -6,
+        floatDelay: Math.random() * 2,
         floatDuration: 6 + Math.random() * 4,
         swayRange: 15 + Math.random() * 20
       };
@@ -95,23 +93,7 @@ export default function BalloonSection({ onBalloonPop }) {
       prev.map(b => (b.id === balloon.id ? { ...b, popped: true } : b))
     );
 
-    // Respawn this balloon after 4 seconds
-    setTimeout(() => {
-      setBalloons(prev =>
-        prev.map(b =>
-          b.id === balloon.id
-            ? {
-                ...b,
-                popped: false,
-                x: 40 + Math.random() * 20,
-                y: 40 + Math.random() * 20,
-                scale: 0.8 + Math.random() * 0.4,
-                floatDelay: 0
-              }
-            : b
-        )
-      );
-    }, 4000);
+    // No automatic respawn: user can click "Float Again" to reset balloons
   };
 
   // Check if all are popped, display reset
@@ -120,31 +102,23 @@ export default function BalloonSection({ onBalloonPop }) {
   return (
         
     <div className="balloons-panel">
-      <div 
-        style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: '18px',
-          color: 'var(--color-text-muted)',
-          fontStyle: 'italic',
-          textAlign: 'center',
-          zIndex: 2,
-          paddingBottom: 60
-        
-        }}
-      >
-      Pop the balloons by tapping 
+      <div className="balloon-caption">
+        Pop the balloons by tapping
       </div>
       {allPopped && (
         <button 
           onClick={resetBalloons}
           style={{
             position: 'absolute',
-            zIndex: 10,
+            top: '56px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 70,
             background: 'white',
             border: '1px solid var(--color-rose-gold)',
             color: 'var(--color-rose-gold)',
-            padding: '10px 20px',
-            borderRadius: '20px',
+            padding: '8px 16px',
+            borderRadius: '18px',
             cursor: 'pointer',
             fontFamily: 'var(--font-sans)',
             fontSize: '12px',
@@ -174,7 +148,7 @@ export default function BalloonSection({ onBalloonPop }) {
                 cursor: 'pointer',
                 animation: `balloonFloat ${b.floatDuration}s ease-in-out ${b.floatDelay}s infinite alternate`,
                 transition: 'opacity 0.2s ease, transform 0.2s ease',
-                zIndex: 5 + Math.floor(b.scale * 5),
+                zIndex: 10 + Math.floor(b.scale * 3),
                 pointerEvents: 'auto'
               }}
               className="balloon-item"

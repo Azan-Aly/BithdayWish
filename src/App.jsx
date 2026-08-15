@@ -139,7 +139,7 @@ export default function App() {
         </div>
         <div className="hero-image-container">
           <div className="hero-image-frame">
-            <img src="/unnamed(5).jpg" alt="To My Forever" />
+            <img src="/main.jpg" alt="To My Forever" />
           </div>
         </div>
       </section>

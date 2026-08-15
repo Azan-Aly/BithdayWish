@@ -329,7 +329,9 @@ h1, h2, h3, h4, .brand-name {
   display: block;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: auto;
+  min-height: 420px;
+  padding-top: 110px; /* make room for caption (increased to push balloons further down) */
   position: relative;
   border-radius: 30px;
   background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%);
@@ -341,6 +343,38 @@ h1, h2, h3, h4, .brand-name {
   align-items: center;
   position: relative;
   height: 500px;
+}
+
+/* Caption above balloons */
+.balloon-caption {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--color-text-muted);
+  font-style: italic;
+  text-align: center;
+  z-index: 80;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  border: 1px solid rgba(183,110,121,0.06);
+  box-shadow: 0 6px 20px rgba(183,110,121,0.06);
+}
+
+/* Responsive adjustments for balloons */
+@media (max-width: 768px) {
+  .balloons-panel { min-height: 360px; }
+  .balloon-caption { font-size: 16px; padding-bottom: 12px; }
+  .balloon-item svg { width: 100px !important; height: auto !important; }
+}
+
+@media (max-width: 480px) {
+  .balloons-panel { min-height: 300px; }
+  .balloon-caption { font-size: 14px; padding: 10px 8px; }
+  .balloon-item svg { width: 82px !important; height: auto !important; }
 }
 
 /* Envelope Wish Area */
@@ -587,6 +621,11 @@ h1, h2, h3, h4, .brand-name {
   overflow: hidden;
   position: relative;
 }
+/* Cap height and allow scrolling to avoid clipping on small viewports */
+.letter-lightbox-card {
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+}
 .letter-lightbox-close {
   position: absolute;
   top: 12px;
@@ -610,6 +649,10 @@ h1, h2, h3, h4, .brand-name {
   object-fit: cover;
   border-radius: 8px;
 }
+.lightbox-image-container {
+  max-height: 60vh;
+  overflow: hidden;
+}
 .lightbox-text-container { padding: 6px 2px 6px 8px; }
 .lightbox-title { font-family: var(--font-serif); font-size: 22px; color: var(--color-rose-gold-dark); margin-bottom: 6px; }
 .lightbox-paragraph { font-family: var(--font-sans); color: var(--color-text-dark); line-height: 1.65; margin-bottom: 12px; }
@@ -621,6 +664,15 @@ h1, h2, h3, h4, .brand-name {
   .letter-lightbox-content { grid-template-columns: 1fr; }
   .lightbox-image-container { order: -1; }
   .lightbox-title { font-size: 20px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .letter-lightbox-card { max-width: calc(100% - 16px); margin: 0 8px; }
+  .letter-lightbox-content { padding: 12px; gap: 12px; }
+  .lightbox-image-container img { max-height: 36vh; border-radius: 10px; }
+  .lightbox-text-container { padding: 8px; }
+  .lightbox-paragraph { font-size: 15px; }
+  .lightbox-title { font-size: 18px; }
 }
 
 /* Wax seal button glow */
@@ -685,9 +737,31 @@ h1, h2, h3, h4, .brand-name {
   align-items: center;
 }
 
+/* Make the in-envelope letter scrollable on small screens and limit its height */
+.envelope-letter {
+  box-sizing: border-box;
+  max-height: 60vh;
+  overflow: auto;
+}
+
 .envelope-letter.slide-out {
   transform: translateY(-240px);
   z-index: 4;
+}
+
+@media (max-width: 480px) {
+  .envelope-letter {
+    height: auto;
+    max-height: 50vh;
+    padding: 14px;
+    justify-content: flex-start;
+  }
+  .envelope-letter.slide-out {
+    transform: translateY(-120px);
+  }
+  .letter-title { font-size: 18px; }
+  .letter-body { font-size: 15px; text-align: left; }
+  .letter-signature { font-size: 16px; }
 }
 
 .letter-title {
