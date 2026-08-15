@@ -3,17 +3,17 @@ import React, { useState } from 'react';
 const MOMENTS_DATA = [
   {
     id: 1,
-    image: '/beach_walk.png',
-    tag: 'TRAVEL',
-    desc: 'Sunset walks and endless conversations.',
+    image: '/mem1.png',
+    tag: 'OUTING',
+    desc: 'Exploring new places and creating memories together.',
     tagColor: '#B76E79',
     tagBg: '#FFF2F4'
   },
   {
     id: 2,
-    image: '/date_night.png',
-    tag: 'DATE NIGHT',
-    desc: 'Toast to us and many more to come.',
+    image: '/mem2.png',
+    tag: 'EVERYDAY LIFE',
+    desc: 'Everyday joy in the quiet moments.',
     tagColor: '#8E733D',
     tagBg: '#FFFDF0'
   },
@@ -25,14 +25,6 @@ const MOMENTS_DATA = [
     tagColor: '#B76E79',
     tagBg: '#FFF2F4'
   },
-  {
-    id: 4,
-    image: '/cooking_together.png',
-    tag: 'EVERYDAY LIFE',
-    desc: 'Everyday joy in the quiet moments.',
-    tagColor: '#4A4E69',
-    tagBg: '#F0F2FA'
-  }
 ];
 
 export default function MomentsGrid() {
